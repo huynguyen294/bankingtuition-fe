@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/bankingtuition-fe/static/css/main.76913d96.css",
-    "main.js": "/bankingtuition-fe/static/js/main.20e2f641.js",
+    "main.css": "/bankingtuition-fe/static/css/main.a187dbfa.css",
+    "main.js": "/bankingtuition-fe/static/js/main.3e12e299.js",
     "static/js/787.22edae46.chunk.js": "/bankingtuition-fe/static/js/787.22edae46.chunk.js",
     "static/media/fa-duotone-900.ttf": "/bankingtuition-fe/static/media/fa-duotone-900.06dac5b5e77c5c0a60b8.ttf",
     "static/media/fa-thin-100.ttf": "/bankingtuition-fe/static/media/fa-thin-100.a542dbcf7a8a55399546.ttf",
@@ -16,12 +16,12 @@
     "static/media/fa-brands-400.ttf": "/bankingtuition-fe/static/media/fa-brands-400.57a665a28aebe9d50334.ttf",
     "static/media/fa-brands-400.woff2": "/bankingtuition-fe/static/media/fa-brands-400.82d540f8d1570344dd05.woff2",
     "index.html": "/bankingtuition-fe/index.html",
-    "main.76913d96.css.map": "/bankingtuition-fe/static/css/main.76913d96.css.map",
-    "main.20e2f641.js.map": "/bankingtuition-fe/static/js/main.20e2f641.js.map",
+    "main.a187dbfa.css.map": "/bankingtuition-fe/static/css/main.a187dbfa.css.map",
+    "main.3e12e299.js.map": "/bankingtuition-fe/static/js/main.3e12e299.js.map",
     "787.22edae46.chunk.js.map": "/bankingtuition-fe/static/js/787.22edae46.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.76913d96.css",
-    "static/js/main.20e2f641.js"
+    "static/css/main.a187dbfa.css",
+    "static/js/main.3e12e299.js"
   ]
 }
