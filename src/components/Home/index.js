@@ -96,7 +96,6 @@ function Home() {
   return (
     <div className={clsx(home_style, { [dark_style]: theme })}>
       <CheckLogin></CheckLogin>
-      <ComfirmModal></ComfirmModal>
       <h1 className={formTitle_style}>Đóng học phí</h1>
       <div className={paymentForm_style}>
         <div className={studentInfo_style}>
