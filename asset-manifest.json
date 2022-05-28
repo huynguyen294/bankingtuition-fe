@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/bankingtuition-fe/static/css/main.76913d96.css",
+    "main.js": "/bankingtuition-fe/static/js/main.20e2f641.js",
+    "static/js/787.22edae46.chunk.js": "/bankingtuition-fe/static/js/787.22edae46.chunk.js",
+    "static/media/fa-duotone-900.ttf": "/bankingtuition-fe/static/media/fa-duotone-900.06dac5b5e77c5c0a60b8.ttf",
+    "static/media/fa-thin-100.ttf": "/bankingtuition-fe/static/media/fa-thin-100.a542dbcf7a8a55399546.ttf",
+    "static/media/fa-light-300.ttf": "/bankingtuition-fe/static/media/fa-light-300.c45ec30a657abad69169.ttf",
+    "static/media/fa-regular-400.ttf": "/bankingtuition-fe/static/media/fa-regular-400.5c30ec4ae74105076183.ttf",
+    "static/media/fa-solid-900.ttf": "/bankingtuition-fe/static/media/fa-solid-900.dc1e56c449febbc54084.ttf",
+    "static/media/fa-thin-100.woff2": "/bankingtuition-fe/static/media/fa-thin-100.e066e08d86a6f555fc87.woff2",
+    "static/media/fa-duotone-900.woff2": "/bankingtuition-fe/static/media/fa-duotone-900.829fc7fc1051687eebcc.woff2",
+    "static/media/fa-light-300.woff2": "/bankingtuition-fe/static/media/fa-light-300.b864d9ed7569deb72a90.woff2",
+    "static/media/fa-regular-400.woff2": "/bankingtuition-fe/static/media/fa-regular-400.1aa6618237f5372b4383.woff2",
+    "static/media/fa-solid-900.woff2": "/bankingtuition-fe/static/media/fa-solid-900.190aa705233e1b08e438.woff2",
+    "static/media/fa-brands-400.ttf": "/bankingtuition-fe/static/media/fa-brands-400.57a665a28aebe9d50334.ttf",
+    "static/media/fa-brands-400.woff2": "/bankingtuition-fe/static/media/fa-brands-400.82d540f8d1570344dd05.woff2",
+    "index.html": "/bankingtuition-fe/index.html",
+    "main.76913d96.css.map": "/bankingtuition-fe/static/css/main.76913d96.css.map",
+    "main.20e2f641.js.map": "/bankingtuition-fe/static/js/main.20e2f641.js.map",
+    "787.22edae46.chunk.js.map": "/bankingtuition-fe/static/js/787.22edae46.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76913d96.css",
+    "static/js/main.20e2f641.js"
+  ]
+}
