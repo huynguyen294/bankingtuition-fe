@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './home.module.scss';
-import { CheckLogin, CheckBox } from '../index';
+import { CheckLogin, CheckBox, ComfirmModal } from '../index';
 import { getHocPhiInfoByMagdApi, dongHocPhiApi, profileApi } from '../../api';
 import { constants } from '../../constants';
 import { useNavigate } from 'react-router';
@@ -96,6 +96,7 @@ function Home() {
   return (
     <div className={clsx(home_style, { [dark_style]: theme })}>
       <CheckLogin></CheckLogin>
+      <ComfirmModal></ComfirmModal>
       <h1 className={formTitle_style}>Đóng học phí</h1>
       <div className={paymentForm_style}>
         <div className={studentInfo_style}>

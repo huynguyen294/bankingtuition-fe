@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -10,23 +9,6 @@ function App() {
   const { App: App_style, dark: dark_style } = styles;
   const theme = useSelector((state) => state.theme);
 
-  const [navFixed, setNavFixed] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 200) {
-        setNavFixed(true);
-      } else {
-        setNavFixed(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [navFixed]);
-
   return (
     <div
       className={clsx(App_style, {
@@ -35,9 +17,9 @@ function App() {
     >
       <ScrollToTop />
 
-      <Nav navFixed={navFixed} />
+      <Nav />
 
-      <Main navFixed={navFixed} />
+      <Main />
 
       <Footer />
     </div>
