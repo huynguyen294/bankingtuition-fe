@@ -1,0 +1,99 @@
+@import '../variables';
+
+.box-identify{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .block-identify{
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+
+        h1{
+            font-size: 30px;
+            color: $light-constract-color;
+        }
+
+        input{
+            background-color: transparent;
+            padding: .5em 1em;
+            width: 30%;
+            text-align: center;
+            border: 1px solid $light-constract-color;
+            border-radius: 4px;
+            color: $light-constract-color;
+            font-size: 18px;
+            font-size: 600;
+            margin-right: 10px;
+
+            &:focus{
+                outline: none;
+            }
+        }
+
+        button{
+            background-color: $light-primary-color;
+            color: $light-color;
+            font-size: 18px;
+            padding: .5em 2em;
+            border-radius: 4px;
+            border: 0;
+
+            &:hover{
+                transform: scale(.99);
+            }
+        }
+
+        .message{
+            color: rgb(255, 0, 0);
+            margin-top: 5px;
+            font-size: 15px;
+            align-items: flex-start;
+            text-align: start;
+            padding: 0;
+            margin: 0;
+            margin-top: 5px;
+        }
+
+        p{
+            color: $light-constract-color;
+            a{
+                text-decoration: underline;
+                cursor: pointer;
+
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.box-identify.dark{
+    .block-identify{
+
+        h1{
+            color: $dark-line-color;
+        }
+
+        input{
+            border: 1px solid $dark-line-color;
+            color: $dark-line-color;
+
+            &:focus{
+                background-color: $dark-secondary-color;
+            }   
+        }
+
+        button{
+            background-color: $dark-el-primary-color;
+            color: $dark-color;
+            font-weight: 600;
+        }
+
+        p{ 
+            color: $dark-line-color;
+        }
+    }
+}

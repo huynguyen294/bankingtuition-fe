@@ -1,0 +1,249 @@
+@import '../variables';
+
+/* Dark theme */
+
+.profile{
+    width: 100%;
+    background-color: rgba($color: $light-secondary-color, $alpha: .2);
+    border-radius: 10px;
+    box-shadow: 6px 6px 0px 0px $light-shadow-color;
+    padding: 3em;
+    margin-top: 2em;
+    color: $light-constract-color;
+    font-weight: 600;
+
+    .title{
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .block-profile{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .form-group{
+            padding: .3em;
+            display: flex;
+            justify-content: space-between;
+
+            label{
+                margin-right: 5px;
+            }
+
+            input{
+                border: 1px solid $light-constract-color;
+                background-color: transparent;
+                padding: .3em;
+                border-radius: 4px;
+                font-weight: 600;
+                width: 250px;
+                color: $light-constract-color;
+
+                &::placeholder{
+                    font-weight: 600;
+                }
+
+                &:focus{
+                    outline: none;
+                    background-color: $light-secondary-color;
+                }
+
+            }
+            &.disable{
+                input{
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+        }
+
+        .box-user-info{
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+            margin-top: 10px;
+
+            .user-info{
+                background-color: rgba(255, 255, 255, 0.3);
+                padding: 2em;
+                border-radius: 4px;
+                box-shadow: 6px 6px 0 0 $light-shadow-color;
+                height: 100%;
+
+
+                .avatar{
+                    flex: 1;
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                    margin-right: 3em;
+                }
+
+                .box-info{
+                    flex: 2;
+
+                    button{
+                        width: 100%;
+                        margin-top: .5em;
+                        padding: .5em;
+                        background-color: $light-primary-color;
+                        color: $light-color;
+                        border: 0;
+                        border-radius: 4px;
+        
+                        &:hover{
+                            transform: scale(.98);
+                        }
+                    }
+                }
+            }
+        }
+
+        .current-transaction{
+            margin-top: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+            flex: 1;
+            padding: 2em;
+            border-radius: 4px;
+
+            .item{
+                border: 1px solid $light-primary-color;
+                padding: 1em 2em;
+                border-radius: 4px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.3);
+                box-shadow: 6px 6px 0 0 $dark-shadow-color;
+    
+                .card-group{
+                    
+                    p{
+                        padding: 0;
+                        margin: 0;
+                        font-weight: 400;
+                        font-size: 13px;
+                    }
+                    
+                    .card-title{
+                        font-weight: 600;
+                        font-size: 16px;
+                    }
+                }
+    
+                h2{
+                    font-size: 15px;
+                    color: rgb(255, 0, 0);
+                }
+    
+    
+                &:hover{
+                    transform: scale(.99);
+                }
+            }
+
+            .box-list-TH{
+                display: flex;
+                flex-direction: column;
+                margin-right: 10px;
+                margin-top: 10px;
+    
+                .list-TH{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    overflow-y: scroll;
+                    height: 30vh;
+                    background-color: rgba(255, 255, 255, 0.3);
+                    padding: 1em;
+                    margin: 0;
+                    border-radius: 4px;
+                    box-shadow: 6px 6px 0 0 $light-shadow-color;
+    
+                    li{
+                        cursor: pointer;
+                        flex: 0 0 auto;
+                        margin: 5px;
+                    }
+
+                    a{
+                        margin: 10px;
+                        color: $light-constract-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.profile.dark{
+    background-color: rgba(73, 78, 89, 0.2);
+    box-shadow: 6px 6px 0px 0px $dark-shadow-color;
+    color: $dark-line-color;
+
+    .block-profile{
+
+        .form-group{
+
+            label{
+                margin-right: 5px;
+            }
+
+            input{
+                border: 1px solid $dark-el-secondary-color;
+                color: $dark-line-color;
+
+                &:focus{
+                    outline: none;
+                    background-color: $dark-background-color;
+                }
+            }
+            &.disable{
+                input{
+                    background-color: $dark-secondary-color;
+                }
+            }
+        }
+
+        .box-user-info{
+            .user-info{
+                background-color: rgba(73, 78, 89, 0.8);
+                .box-info{
+                    button{
+                        background-color: $dark-el-primary-color;
+                    }
+                }
+            }
+        }
+
+        .current-transaction{
+            background-color: rgba(73, 78, 89, 0.8);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+            flex: 1;
+            padding: 2em;
+            border-radius: 4px;
+
+            .item{
+                border: 1px solid $dark-el-secondary-color;
+                background-color: $dark-secondary-color;
+    
+                h2{
+                    color: $dark-el-primary-color;
+                }
+            }
+    
+            .box-list-TH{
+                .list-TH{
+                    background-color: rgba(73, 78, 89, 0.8);
+                }
+                a{
+                    color: $dark-el-primary-color;
+                }
+            }
+        }
+    }
+}

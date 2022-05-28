@@ -1,0 +1,75 @@
+@import '../../variables';
+
+.checkbox{
+    display: flex;
+    align-items: center;
+
+    &:hover{
+        .checkbox-icon{
+            background-color: $light-primary-color;
+        }
+    }
+
+    &.active{
+        .checkbox-icon{
+            background-color: $light-primary-color;
+            i {
+                opacity: 1;
+            }
+        }
+        
+    }
+
+    .checkbox-icon{
+        border: 1px solid $light-constract-color;
+        border-radius: 2px;
+        color: rgba($color: $light-color, $alpha: .85);
+        display: block;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+
+        i {
+            padding: 2px;
+            font-size: 10px;
+            cursor: pointer;
+            opacity: 0;
+        }
+        
+    }
+
+    span{
+        color: $light-constract-color;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 600;
+    }
+}
+
+.checkbox.dark{
+    &:hover{
+        .checkbox-icon{
+            background-color: $dark-el-primary-color;
+        }
+    }
+
+    &.active{
+        .checkbox-icon{
+            background-color: $dark-el-primary-color;
+        }
+        
+    }
+
+    .checkbox-icon{
+        border: 1px solid $dark-color;
+        color: $dark-color;
+        
+    }
+
+    span{
+        color: $dark-color;
+    }
+}

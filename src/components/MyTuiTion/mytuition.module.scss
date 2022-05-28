@@ -1,0 +1,150 @@
+@import '../variables';
+
+/* Dark theme */
+
+.TH{
+    width: 100%;
+    background-color: rgba($color: $light-secondary-color, $alpha: .2);
+    border-radius: 10px;
+    box-shadow: 6px 6px 0px 0px $light-shadow-color;
+    padding: 3em;
+    margin-top: 2em;
+    color: $light-constract-color;
+    font-weight: 600;
+
+    .title{
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .block-TH{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+            .item{
+                border: 1px solid $light-primary-color;
+                padding: 1em 2em;
+                border-radius: 4px;
+                display: flex;
+                justify-content: space-between;
+                background-color: rgba(255, 255, 255, 0.3);
+                align-items: center;
+                box-shadow: 6px 6px 0 0 $dark-shadow-color;
+
+                .card-group{
+                    
+                    p{
+                        padding: 0;
+                        margin: 0;
+                    }
+                    
+                    .card-title{
+                        font-size: 25px;
+                    }
+                }
+
+
+                &:hover{
+                    transform: scale(.99);
+                }
+
+                img{
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+
+        .box-list-TH{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+            margin-top: 10px;
+
+            .list-TH{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                overflow-y: scroll;
+                height: 60vh;
+                background-color: rgba(255, 255, 255, 0.3);
+                padding: 2em;
+                margin: 0;
+                border-radius: 4px;
+                box-shadow: 6px 6px 0 0 $light-shadow-color;
+                list-style-type: none;
+
+                li{
+                    cursor: pointer;
+                    flex: 0 0 auto;
+                    margin: 5px;
+                }
+            }
+        }
+
+        .current-transaction{
+            margin-top: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+            flex: 1;
+            padding: 2em;
+            border-radius: 4px;
+
+            .box-detail{
+                padding: 1em;
+                p{
+                    margin: 10px;
+                    padding: 0;
+                    font-size: 20px;
+
+                    span{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.TH.dark{
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgb(177, 78, 21); 
+        border-radius: 10px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(152, 61, 11); 
+    }
+
+    background-color: rgba(73, 78, 89, 0.2);
+    box-shadow: 6px 6px 0px 0px $dark-shadow-color;
+    color: $dark-line-color;
+
+    .block-TH{
+
+        .item{
+            border: 1px solid $dark-el-secondary-color;
+            background-color: $dark-secondary-color;
+        }
+
+        .box-list-TH{
+            .list-TH{
+                background-color: rgba(73, 78, 89, 0.8);
+            }
+
+            .tuition-info{
+                background-color: rgba(73, 78, 89, 0.8);
+            }
+        }
+
+        .current-transaction{
+            background-color: rgba(73, 78, 89, 0.8);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+        }
+    }
+}

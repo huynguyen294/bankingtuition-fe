@@ -1,0 +1,33 @@
+@import '../../variables';
+
+.footer {
+  background-color: $light-primary-color;
+  box-shadow: 0px 0px 6px 6px $light-shadow-color;
+
+  .fo-copyright {
+    margin-bottom: 0;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      color: #fff;
+      font-weight: 400;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+/* Dark theme */
+
+.footer.dark {
+  background-color: $dark-primary-color;
+  color: $dark-color;
+  box-shadow: 0px 0px 6px 6px $light-shadow-color;
+
+  .fo-copyright {
+    border-color: $dark-line-color;
+  }
+}

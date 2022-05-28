@@ -1,0 +1,227 @@
+@import '../variables';
+
+/* Dark theme */
+
+.home{
+    width: 100%;
+    background-color: rgba($color: $light-secondary-color, $alpha: .2);
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px 3px $light-shadow-color;
+    padding: 4em;
+    margin-top: 2em;
+    color: rgba($color: $light-constract-color, $alpha: .9);
+    font-weight: 600;
+
+    .form-title{
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .payment-form{
+        display: flex;
+        width: 100%;
+
+        .form-group{
+            padding: .3em;
+            display: flex;
+            justify-content: space-between;
+
+            label{
+                margin-right: 5px;
+            }
+
+            input{
+                border: 1px solid $light-constract-color;
+                background-color: transparent;
+                padding: .3em;
+                border-radius: 4px;
+                font-weight: 600;
+                color: $light-constract-color;
+
+                &::placeholder{
+                    font-weight: 600;
+                }
+
+                &:focus{
+                    outline: none;
+                    background-color: rgba($color: $light-secondary-color, $alpha: .4);
+                }
+            }
+            &.disable{
+                input{
+                    background-color: rgba($color: $light-secondary-color, $alpha: .4);
+                }
+            }
+            
+            &.rules{
+                justify-content: flex-start;
+                flex-direction: column;
+
+                div{
+                    font-size: 15px;
+
+                    p:nth-child(1){
+                        font-size: 16px;
+                        font-weight: 700;
+                        text-decoration: underline;
+                    }
+
+                    p{
+                        padding: 0;
+                        margin: 0;
+                        display: -webkit-box;
+                        overflow: hidden;
+                        -webkit-line-clamp: 4;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+
+                &.rules-full{
+                    p{
+                        display: block;
+                        overflow: visible;
+                    }
+                }
+
+                a{
+                    cursor: pointer;
+                    text-decoration: underline;
+                    color: $light-constract-color;
+                }
+            }
+
+            button{
+                background-color: $light-primary-color;
+                color: $light-color;
+                padding: .7em 5em;
+                border: 0;
+                border-radius: 4px;
+                font-weight: 700;
+                color: rgba($color: $light-color, $alpha:.9);
+
+                &:hover{
+                    transform: scale(.98);
+                }
+            }
+        }
+
+        .student-info{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+
+            .user-info{
+                background-color: rgba($color: #fff, $alpha: .3);
+                padding: 2em;
+                border-radius: 4px;
+                box-shadow: 6px 6px 0 0 $light-shadow-color;
+            }
+
+            .tuition-info{
+                flex: 1;
+                background-color: rgba(255, 255, 255, 0.3);
+                margin-top: 10px;
+                padding: 2em;
+                box-shadow: 6px 6px 0 0 $light-shadow-color;
+                border-radius: 4px;
+            }
+        }
+
+        .payment-info{
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+            flex: 1;
+            padding: 2em;
+            border-radius: 4px;
+
+
+        }
+    }
+}
+
+.home.dark{
+    background-color: rgba(73, 78, 89, 0.2);
+    box-shadow: 6px 6px 0px 0px $dark-shadow-color;
+    color: $dark-line-color;
+
+    .payment-form{
+
+        .form-group{
+
+            label{
+                margin-right: 5px;
+            }
+
+            input{
+                border: 1px solid $dark-el-secondary-color;
+                color: $dark-line-color;
+                width: 60%;
+                
+                &:focus{
+                    outline: none;
+                    background-color: $dark-background-color;
+                }
+                
+            }
+            &.disable{
+                input{
+                    background-color: $dark-background-color;
+                }
+            }
+            
+            &.rules{
+                p:nth-child(1){
+                    color: $dark-el-primary-color;
+                }
+                a{
+                    color: $dark-el-primary-color;
+                }
+            }
+
+            button{
+                background-color: $dark-el-primary-color;
+                color: $light-color;
+                padding: .2em 3em;
+                border: 0;
+                border-radius: 4px;
+
+                &:hover{
+                    transform: scale(.98);
+                }
+            }
+
+            .message{
+                color: red;
+                margin-top: 5px;
+                font-size: 15px;
+                align-items: flex-start;
+                text-align: start;
+                padding: 0;
+                margin: 0;
+                margin-top: 5px;
+            }
+        }
+
+        .student-info{
+            .user-info{
+                background-color: rgba(73, 78, 89, 0.8);
+            }
+
+            .tuition-info{
+                background-color: rgba(73, 78, 89, 0.8);
+            }
+        }
+
+        .payment-info{
+            background-color: rgba(73, 78, 89, 0.8);
+            box-shadow: 6px 6px 0 0 $light-shadow-color;
+            flex: 1;
+            padding: 2em;
+            border-radius: 4px;
+
+
+        }
+    }
+}
