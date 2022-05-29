@@ -1,16 +1,18 @@
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './transaction-history.module.scss';
-import { CheckLogin } from '../index';
-import { constants } from '../../constants';
-import { lichSuGiaoDichApi } from '../../api';
+import { actions, CheckLogin } from '../index';
+import { constants } from '../../redux/constants';
 
 function TransactionHistory() {
+  const { fetchLsgd } = actions;
   const { FORMAT_MONEY } = constants;
-  const { theme, user } = useSelector((state) => state);
-  const [lsgdList, setLsgdList] = useState([]);
+  const { uiStore, userStore } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { theme } = uiStore;
+  const { user, lsgdList } = userStore;
   const [lsgd, setLsgd] = useState({});
 
   const {
@@ -27,14 +29,8 @@ function TransactionHistory() {
     dark: dark_style,
   } = styles;
 
-  const getLsgdList = async () => {
-    const res = await fetch(lichSuGiaoDichApi + '?mssv=' + user.mssv);
-    const result = await res.json();
-    setLsgdList(result.data);
-  };
-
   useEffect(() => {
-    getLsgdList();
+    dispatch(fetchLsgd(user.mssv));
   }, []);
 
   useEffect(() => {
@@ -73,7 +69,7 @@ function TransactionHistory() {
         </div>
         <div className={currentTransaction_style}>
           <h2>Chi tiết giao dịch</h2>
-          {lsgd != {} ? (
+          {lsgd !== {} ? (
             <div className={boxDetail_style}>
               <p>
                 <span>Tên giao dịch:</span> {lsgd.ten_gd}

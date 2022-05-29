@@ -1,17 +1,19 @@
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './mytuition.module.scss';
-import { CheckLogin, imageUrls } from '../index';
-import { constants } from '../../constants';
-import { getHocPhiInfoApi } from '../../api';
+import { CheckLogin, imageUrls, actions } from '../index';
+import { constants } from '../../redux/constants';
 
 function MyTuiTion() {
+  const { fetchHocPhi } = actions;
   const { FORMAT_MONEY } = constants;
-  const { theme, user } = useSelector((state) => state);
-  const [hocphiList, setHocphiList] = useState([]);
+  const { uiStore, userStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { user, hocphiList } = userStore;
   const [hocphi, setHocphi] = useState({});
+  const dispatch = useDispatch();
 
   const {
     'block-TH': blockTH_style,
@@ -27,15 +29,8 @@ function MyTuiTion() {
     dark: dark_style,
   } = styles;
 
-  const getHocPhiList = async () => {
-    const res = await fetch(getHocPhiInfoApi + '/' + user.mssv);
-    const result = await res.json();
-    setHocphiList([...result.data]);
-    setHocphi(hocphiList[0]);
-  };
-
   useEffect(() => {
-    getHocPhiList();
+    dispatch(fetchHocPhi(user.mssv));
   }, []);
 
   useEffect(() => {

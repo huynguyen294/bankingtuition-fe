@@ -10,7 +10,9 @@ import { Switch } from '../../index';
 
 function Navigation({ navFixed }) {
   const { setIsLogin } = actions;
-  const { theme, isLogin } = useSelector((state) => state);
+  const { uiStore, userStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { isLogin } = userStore;
   const dispatch = useDispatch();
   const [profileMenuAct, setProfileMenuAct] = useState(false);
 

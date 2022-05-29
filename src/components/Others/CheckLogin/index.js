@@ -1,37 +1,28 @@
-import { memo, useEffect, useState } from "react"
-import { useStore } from "react-redux";
-import { useNavigate } from "react-router";
+import { memo, useEffect } from 'react';
+import { useSelector, useStore } from 'react-redux';
+import { useNavigate } from 'react-router';
 
-function CheckLogin(){
+function CheckLogin() {
+  const store = useStore();
+  const navigate = useNavigate();
+  const { isLogin } = useSelector((state) => state.userStore);
 
-    const store = useStore();
-    const navigate = useNavigate();
-    const [handleNavigate ,setHandleNavigate] = useState(false)
-    
-    useEffect(()=>{
-        const unSubcribe = store.subscribe(()=>{
-        const { isLogin } = store.getState();
-        if(!isLogin){
-            setHandleNavigate(true)
-            navigate('/login', {replace: true})
-        }
-        });
-        return ()=>{
-        setHandleNavigate(false)
-        unSubcribe()
-        }
-    }, [handleNavigate])
-
+  useEffect(() => {
     //ktra lần đầu vào web
-    useEffect(()=>{
-        const { isLogin } = store.getState();
-        if(!isLogin){
-            setHandleNavigate(true)
-            navigate('/login', {replace: true})
-        }
-    }, [])
+    if (!isLogin) {
+      navigate('/login', { replace: true });
+    }
+    const unSubcribe = store.subscribe(() => {
+      if (!isLogin) {
+        navigate('/login', { replace: true });
+      }
+    });
+    return () => {
+      unSubcribe();
+    };
+  }, [isLogin]);
 
-    return null
+  return null;
 }
 
-export default memo(CheckLogin)
+export default memo(CheckLogin);

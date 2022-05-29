@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import styles from './footer.module.scss';
 
 function Footer() {
-  const theme = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.uiStore);
 
   const {
     'fo-copyright': foCopyright_style,

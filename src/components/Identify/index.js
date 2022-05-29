@@ -7,7 +7,9 @@ import styles from './identify.module.scss';
 import { dongHocPhiApi, xacMinhApi } from '../../api';
 
 function Identify() {
-  const { theme, paymentInfo } = useSelector((state) => state);
+  const { userStore, uiStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { paymentInfo } = userStore;
   const [message, setMessage] = useState({});
   const [code, setCode] = useState(0);
   const [success, setSuccess] = useState(false);
@@ -20,7 +22,6 @@ function Identify() {
   } = styles;
 
   const { userMoney, userMssv, userMagd, email } = paymentInfo;
-  console.log(userMssv);
 
   const hanleSendMail = async () => {
     setMessage({

@@ -6,7 +6,7 @@ import styles from './box-bg.module.scss';
 import { imageUrls } from '../../index';
 
 function BoxBg() {
-  const { theme } = useSelector((state) => state);
+  const { theme } = useSelector((state) => state.uiStore);
 
   const {
     'box-bg': boxBg_style,

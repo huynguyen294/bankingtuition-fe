@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styles from './comfirm-modal.module.scss';
 
 function ComfirmModal() {
-  const { theme } = useSelector((state) => state);
+  const { theme } = useSelector((state) => state.uiStore);
 
   const {
     'modal-header': modalHeader_style,

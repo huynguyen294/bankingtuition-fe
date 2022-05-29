@@ -1,14 +1,12 @@
 import clsx from 'clsx';
-import { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { memo, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './checkbox.module.scss';
-import { actions } from '../../index';
 
-function Checkbox({ lable }) {
-  const { setAccept } = actions;
-  const { theme, accept } = useSelector((state) => state);
-  const dispatch = useDispatch();
+function Checkbox({ lable, getChecked }) {
+  const { theme } = useSelector((state) => state.uiStore);
+  const [checked, setChecked] = useState(false);
 
   const {
     'checkbox-icon': checkboxIcon_style,
@@ -17,14 +15,18 @@ function Checkbox({ lable }) {
     dark: dark_style,
   } = styles;
 
+  useEffect(() => {
+    getChecked(checked);
+  }, [checked]);
+
   return (
     <div
       className={clsx(checkbox_style, {
-        [active_style]: accept,
+        [active_style]: checked,
         [dark_style]: theme,
       })}
       onClick={() => {
-        dispatch(setAccept(!accept));
+        setChecked(!checked);
       }}
     >
       <div className={checkboxIcon_style}>

@@ -6,8 +6,7 @@ import { BoxBg, LoginBlock } from '../index';
 import styles from './login.module.scss';
 
 function Login() {
-  const state = useSelector((state) => state);
-  const { theme, isLoginBtn} = state;
+  const { theme, isLoginBtn } = useSelector((state) => state.uiStore);
 
   const {
     'box-login': boxLogin_style,

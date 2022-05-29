@@ -3,26 +3,32 @@ import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './home.module.scss';
-import { CheckLogin, CheckBox, ComfirmModal } from '../index';
-import { getHocPhiInfoByMagdApi, dongHocPhiApi, profileApi } from '../../api';
-import { constants } from '../../constants';
+import { CheckLogin, CheckBox } from '../index';
+import { getHocPhiInfoByMagdApi, dongHocPhiApi } from '../../api';
+import { constants } from '../../redux/constants';
 import { useNavigate } from 'react-router';
 import { actions } from '../index';
 
 function Home() {
   const { FORMAT_MONEY } = constants;
-  const { setPaymentInfo } = actions;
-  const { theme, user, accept } = useSelector((state) => state);
+  const { setPaymentInfo, fetchProfile } = actions;
+  const { userStore, uiStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { user } = userStore;
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const [rulesFull, setRulesFull] = useState(false);
-  const [hocphiNo, setHocphiNo] = useState(0);
-  const [paymentMoney, setPaymentMoney] = useState(0);
-  const [mssv, setMssv] = useState('');
-  const [magd, setMagd] = useState('');
-  const [message, setMessage] = useState('');
-  const [currUser, setCurrUser] = useState({});
+  const [userInput, setUserInput] = useState({
+    mssv: '',
+    magd: '',
+    paymentMoney: '',
+  });
+  const [uiController, setUiController] = useState({
+    homeAcceptRule: false,
+    message: '',
+    rulesFull: false,
+    hocphiNo: 0,
+  });
 
   const {
     'payment-form': paymentForm_style,
@@ -34,6 +40,7 @@ function Home() {
     'btn-accept': btnAccept_style,
     'rules-full': rulesFull_style,
     'form-title': formTitle_style,
+    'input-money': inputMoney_style,
     disable: disabled_style,
     message: message_style,
     rules: rules_style,
@@ -43,15 +50,17 @@ function Home() {
 
   const hanlePayment = async (e) => {
     e.preventDefault();
-    if (accept) {
-      setMessage(
-        'Hệ thống đang kiểm tra mssv và mã giao dịch, sẽ chuyển hướng nhanh thôi!!!'
-      );
+    if (uiController.homeAcceptRule) {
+      setUiController((prev) => ({
+        ...prev,
+        message:
+          'Hệ thống đang kiểm tra mssv và mã giao dịch, sẽ chuyển hướng nhanh thôi!!!',
+      }));
       const inputPaymentInfo = {
         email: user.email,
-        userMoney: paymentMoney,
+        userMoney: userInput.paymentMoney,
         userMssv: user.mssv,
-        userMagd: magd,
+        userMagd: userInput.magd,
       };
       dispatch(setPaymentInfo(inputPaymentInfo));
       const Options = {
@@ -68,34 +77,40 @@ function Home() {
       if (result.code === 0) {
         navigate('/xac-minh', { replace: true });
       } else {
-        setMessage('Hệ thống lỗi vui lòng thử lại trong giây lát');
+        setUiController((prev) => ({
+          ...prev,
+          message: 'Hệ thống lỗi vui lòng thử lại trong giây lát',
+        }));
       }
     } else {
-      setMessage('Vui lòng chấp nhận các điều khoảng và dịch vụ');
+      setUiController((prev) => ({
+        ...prev,
+        message: 'Vui lòng chấp nhận các điều khoảng và dịch vụ',
+      }));
     }
   };
 
-  const handleChange = async () => {
-    const res = await fetch(
-      getHocPhiInfoByMagdApi + `?mssv=${mssv}&magd=${magd}`
-    );
-    const result = await res.json();
-    setHocphiNo(result.data);
+  const handleCheckedRule = (checked) => {
+    setUiController((prev) => ({ ...prev, homeAcceptRule: checked }));
   };
 
   useEffect(() => {
+    const handleChange = async () => {
+      if (userInput.mssv && userInput.magd) {
+        const res = await fetch(
+          getHocPhiInfoByMagdApi +
+            `?mssv=${userInput.mssv}&magd=${userInput.magd}`
+        );
+        const result = await res.json();
+        setUiController((prev) => ({ ...prev, hocphiNo: result.data }));
+      }
+    };
     handleChange();
-  }, [mssv, magd]);
-
-  useEffect(() => {
-    fetch(profileApi + `?mssv=${user.mssv}`)
-      .then((res) => res.json())
-      .then((result) => setCurrUser(result.data));
-  }, []);
+  }, [userInput.mssv, userInput.magd]);
 
   return (
     <div className={clsx(home_style, { [dark_style]: theme })}>
-      <CheckLogin></CheckLogin>
+      <CheckLogin />
       <h1 className={formTitle_style}>Đóng học phí</h1>
       <div className={paymentForm_style}>
         <div className={studentInfo_style}>
@@ -117,7 +132,9 @@ function Home() {
             <div className={formGroup_style}>
               <label htmlFor="mssv">Mã số sinh viên: </label>
               <input
-                onChange={(e) => setMssv(e.target.value)}
+                onChange={(e) =>
+                  setUserInput((prev) => ({ ...prev, mssv: e.target.value }))
+                }
                 type="text"
                 id="mssv"
               />
@@ -125,7 +142,9 @@ function Home() {
             <div className={formGroup_style}>
               <label htmlFor="ma-gd">Mã giao dịch: </label>
               <input
-                onChange={(e) => setMagd(e.target.value)}
+                onChange={(e) =>
+                  setUserInput((prev) => ({ ...prev, magd: e.target.value }))
+                }
                 type="text"
                 id="ma-gd"
               />
@@ -137,7 +156,9 @@ function Home() {
             <label htmlFor="unpaid-tuition">Học phí nợ: </label>
             <input
               value={
-                hocphiNo ? FORMAT_MONEY('' + hocphiNo) : FORMAT_MONEY('' + 0)
+                uiController.hocphiNo
+                  ? FORMAT_MONEY('' + uiController.hocphiNo)
+                  : FORMAT_MONEY('' + 0)
               }
               type="text"
               id="unpaid-tuition"
@@ -147,23 +168,33 @@ function Home() {
           <div className={clsx(formGroup_style, disabled_style)}>
             <label htmlFor="avai-money">số dư khả dụng: </label>
             <input
-              value={FORMAT_MONEY('' + currUser.sodu)}
+              value={FORMAT_MONEY('' + user.sodu)}
               type="text"
               disabled
               id="avai-money"
             />
           </div>
-          <div className={formGroup_style}>
+          <div className={clsx(formGroup_style, inputMoney_style)}>
             <label htmlFor="payment-money">Số tiền thanh toán: </label>
+            <p>
+              {userInput.paymentMoney
+                ? FORMAT_MONEY(userInput.paymentMoney + '')
+                : ''}
+            </p>
             <input
-              onChange={(e) => setPaymentMoney(e.target.value)}
+              onChange={(e) =>
+                setUserInput((prev) => ({
+                  ...prev,
+                  paymentMoney: e.target.value,
+                }))
+              }
               type="text"
               id="payment-money"
             />
           </div>
           <div
             className={clsx(formGroup_style, rules_style, {
-              [rulesFull_style]: rulesFull,
+              [rulesFull_style]: uiController.rulesFull,
             })}
           >
             <div>
@@ -184,15 +215,26 @@ function Home() {
                 nesciunt sapiente? Et nesciunt inventore quibusdam ad.
               </p>
             </div>
-            <a onClick={() => setRulesFull(!rulesFull)}>
-              {!rulesFull ? 'Xem thêm' : 'Rút gọn'}
+            <a
+              onClick={() =>
+                setUiController((prev) => ({
+                  ...prev,
+                  rulesFull: !uiController.rulesFull,
+                }))
+              }
+            >
+              {!uiController.rulesFull ? 'Xem thêm' : 'Rút gọn'}
             </a>
           </div>
           <div className={clsx(formGroup_style, rules_style)}>
             <div className={btnAccept_style}>
-              <CheckBox lable={'Đồng ý'} />
+              <CheckBox getChecked={handleCheckedRule} lable={'Đồng ý'} />
             </div>
-            {message ? <i className={message_style}>{message}</i> : ''}
+            {uiController.message ? (
+              <i className={message_style}>{uiController.message}</i>
+            ) : (
+              ''
+            )}
           </div>
           <div className={formGroup_style}>
             <button onClick={hanlePayment}>Thanh toán</button>

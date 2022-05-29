@@ -8,5 +8,6 @@ export { default as MyTuiTion } from './MyTuiTion';
 export { default as TransactionHistory } from './TransactionHistory';
 export { default as Identify } from './Identify';
 
-export * as actions from '../actions';
+export * as actions from '../redux/actions';
 export { imageUrls } from '../configs';
+export * from '../api';

@@ -7,7 +7,7 @@ import styles from './App.module.scss';
 
 function App() {
   const { App: App_style, dark: dark_style } = styles;
-  const theme = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.uiStore);
 
   return (
     <div

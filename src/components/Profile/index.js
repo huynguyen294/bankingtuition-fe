@@ -1,18 +1,19 @@
 import clsx from 'clsx';
-import { memo, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { memo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import styles from './profile.module.scss';
-import { CheckLogin, imageUrls } from '../index';
-import { constants } from '../../constants';
-import { lichSuGiaoDichApi, profileApi } from '../../api';
+import { CheckLogin, imageUrls, actions } from '../index';
+import { constants } from '../../redux/constants';
 
 function Profile() {
   const { FORMAT_MONEY } = constants;
-  const { theme, user } = useSelector((state) => state);
-  const [lsgdList, setLsgdList] = useState([]);
-  const [currUser, setCurrUser] = useState({});
+  const { fetchLsgd } = actions;
+  const { uiStore, userStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { user, lsgdList } = userStore;
+  const dispatch = useDispatch();
   const currentHistoryLenght = lsgdList.length - 4;
 
   const {
@@ -34,21 +35,8 @@ function Profile() {
     dark: dark_style,
   } = styles;
 
-  const getLsgdList = () => {
-    fetch(lichSuGiaoDichApi + '?mssv=' + user.mssv)
-      .then((res) => res.json())
-      .then((result) => setLsgdList([...result.data]));
-  };
-
-  const getProfile = () => {
-    fetch(profileApi + `?mssv=${user.mssv}`)
-      .then((res) => res.json())
-      .then((result) => setCurrUser({ ...result.data }));
-  };
-
   useEffect(() => {
-    getLsgdList();
-    getProfile();
+    dispatch(fetchLsgd(user.mssv));
   }, []);
 
   return (
@@ -68,7 +56,7 @@ function Profile() {
                 <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="avai-money">số dư: </label>
                   <input
-                    value={FORMAT_MONEY(`${currUser.sodu}`)}
+                    value={FORMAT_MONEY(`${user.sodu}`)}
                     type="text"
                     disabled
                     id="avai-money"

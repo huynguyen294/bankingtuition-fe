@@ -1,22 +1,26 @@
+import axios from 'axios';
 //chú ý: tất cả api trả về
-//code: 1 => thành công
-//code: 0 => thất bại
+//code: 0 => thành công
+//code: 1 => thất bại
 //code: 404 => api sai, không tìm thấy api
+//code: 500 => server lỗi
+
+axios.create({
+  baseURL: 'https://bankingtuition.herokuapp.com',
+});
 
 //mô tả [POST] truyền vào tk, mk. Sau khi ktra trong db trả về
 //đăng nhập thành công hay thất bại
-export const loginApi = 'https://bankingtuition.herokuapp.com/user/login';
+export const loginApi = '/user/login';
 //mô tả [GET] truyền mssv. Sau khi ktra trong db trả về
 //thông tin profile sv
-export const profileApi = 'https://bankingtuition.herokuapp.com/user/profile';
+export const profileApi = '/user/profile';
 //mô tả [GET] truyền mssv. Sau khi ktra trong db trả về
 //lịch sử giao dịch của sinh viên
-export const lichSuGiaoDichApi =
-  'https://bankingtuition.herokuapp.com/user/profile/lich_su_giao_dich';
+export const lichSuGiaoDichApi = '/user/profile/lich_su_giao_dich';
 //mô tả [GET] truyền mssv. Sau khi ktra trong db trả về
 //thông tin các học phí của sinh viên
-export const getHocPhiInfoApi =
-  'https://bankingtuition.herokuapp.com/hocphi/thong_tin_hoc_phi_user';
+export const getHocPhiInfoApi = '/hocphi/thong_tin_hoc_phi_user/';
 //mô tả [GET] truyền mssv và mã gd. Sau khi ktra trong db trả về
 //thông tin các học phí của sinh viên
 export const getHocPhiInfoByMagdApi =

@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './login-block.module.scss';
-import { loginApi } from '../../../api';
 import { actions } from '../..';
 
 function LoginBlock({ isLoginBtn }) {
-  const { setIsLogin, setUser } = actions;
+  const { userLogin } = actions;
 
-  const { theme } = useSelector((state) => state);
+  const { uiStore, userStore } = useSelector((state) => state);
+  const { theme, loginMessage } = uiStore;
+  const { isLogin } = userStore;
   const dispatch = useDispatch();
   const negative = useNavigate();
 
   const [formActive, setFormActive] = useState(isLoginBtn);
-  const [message, setMessage] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,33 +42,19 @@ function LoginBlock({ isLoginBtn }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const passwordEncode = password;
-    const Options = {
-      method: 'POST',
-      headers: {
-        Accept:
-          'application/json, text/plain, */*, application/x-www-form-urlencoded',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      //encode pass word
-      body: `username=${username}&&password=${passwordEncode}`,
-    };
-
-    const res = await fetch(loginApi, Options);
-    const result = await res.json();
-    dispatch(setUser(result.data));
-    if (result.code === 0) {
-      dispatch(setIsLogin(true));
-      negative('/', { replace: true });
-    } else {
-      setMessage(true);
-    }
+    dispatch(userLogin({ username, password }));
   };
 
   // xử lí khi ấn nút đăng nhập, đăng kí khi đang ở trong login page
   useEffect(() => {
     setFormActive(!isLoginBtn);
   }, [isLoginBtn]);
+
+  useEffect(() => {
+    if (isLogin) {
+      negative('/', { replace: true });
+    }
+  }, [isLogin]);
 
   return (
     <div className={clsx(loginBlock_style, { [dark_style]: theme })}>
@@ -104,13 +90,7 @@ function LoginBlock({ isLoginBtn }) {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button onClick={handleLogin}> Đăng nhập</button>
-          {message ? (
-            <i className={message_style}>
-              Tài khoảng hoặc mật khẩu không chính xác
-            </i>
-          ) : (
-            ''
-          )}
+          {loginMessage ? <i className={message_style}>{loginMessage}</i> : ''}
           <a href="#">Quên mật khẩu?</a>
         </form>
         <form className={clsx(forms_style, registerForm_style)}>

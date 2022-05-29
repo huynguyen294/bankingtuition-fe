@@ -1,11 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 /* redux */
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './redux/store';
 
 /* bootstrap */
 import 'bootstrap/dist/css/bootstrap.css';

@@ -7,7 +7,7 @@ import styles from './switch.module.scss';
 function Switch({ left, right }) {
   const { setTheme } = actions;
 
-  const theme = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.uiStore);
   const dispatch = useDispatch();
 
   const handleChangeTheme = () => {
