@@ -8,6 +8,25 @@ import { CheckLogin, imageUrls, actions } from '../index';
 import { constants } from '../../redux/constants';
 
 function Profile() {
+  const {
+    'block-profile': blockProfile_style,
+    'box-user-info': boxUserInfo_style,
+    'user-info': userInfo_style,
+    'current-transaction': currentTransaction_style,
+    'form-group': formGroup_style,
+    'box-info': boxInfo_style,
+    title: Title_style,
+    disable: disabled_style,
+    'list-TH': listTH_style,
+    'card-group': cardGroup_style,
+    'card-title': cardTitle_style,
+    'box-list-TH': boxListTH_style,
+    item: item_style,
+    avatar: avavtar_style,
+    profile: profile_style,
+    dark: dark_style,
+  } = styles;
+
   const { FORMAT_MONEY } = constants;
   const { fetchLsgd, fetchUpdateUser } = actions;
 
@@ -29,25 +48,6 @@ function Profile() {
       return lsgdList.length - 4;
     }
   }, [lsgdList]);
-
-  const {
-    'block-profile': blockProfile_style,
-    'box-user-info': boxUserInfo_style,
-    'user-info': userInfo_style,
-    'current-transaction': currentTransaction_style,
-    'form-group': formGroup_style,
-    'box-info': boxInfo_style,
-    title: Title_style,
-    disable: disabled_style,
-    'list-TH': listTH_style,
-    'card-group': cardGroup_style,
-    'card-title': cardTitle_style,
-    'box-list-TH': boxListTH_style,
-    item: item_style,
-    avatar: avavtar_style,
-    profile: profile_style,
-    dark: dark_style,
-  } = styles;
 
   const handleUpdateUserProfile = () => {
     if (

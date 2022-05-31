@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { memo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './comfirm-modal.module.scss';
 
-function ComfirmModal() {
-  const { theme } = useSelector((state) => state.uiStore);
+import { actions } from '../../index';
 
+function ComfirmModal() {
   const {
     'modal-header': modalHeader_style,
     'modal-title': modalTitle_style,
@@ -16,6 +16,13 @@ function ComfirmModal() {
     modal: modal_style,
     dark: dark_style,
   } = styles;
+
+  const { fetchLsgd } = actions;
+
+  const { uiStore, userStore } = useSelector((state) => state);
+  const { theme } = uiStore;
+  const { user } = userStore;
+  const dispatch = useDispatch();
 
   return (
     <div className={container_style}>
@@ -30,7 +37,10 @@ function ComfirmModal() {
           </i>
         </div>
         <div className={modalFooter_style}>
-          <Link to={'/lich-su-giao-dich'}>
+          <Link
+            to={'/lich-su-giao-dich'}
+            onClick={() => dispatch(fetchLsgd(user.mssv))}
+          >
             <button>Xem lịch sử giao dịch</button>
           </Link>
           <Link to={'/'}>

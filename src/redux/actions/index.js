@@ -132,7 +132,7 @@ export const fetchHandlePayment =
       .then((res) => res.data)
       .then((result) => {
         if (result.code === 0) {
-          console.log(result);
+          dispatch(refreshUser(userMssv));
           dispatch({
             type: SET_PAYMENT_STATUS,
             payload: { code: result.code, message: 'identify success' },

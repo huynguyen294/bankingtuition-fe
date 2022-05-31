@@ -3,7 +3,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './home.module.scss';
-import { CheckLogin, CheckBox } from '../index';
+import { CheckLogin, CheckBox, ComfirmModal } from '../index';
 import { getHocPhiInfoByMagdApi } from '../../api';
 import { constants } from '../../redux/constants';
 import { useNavigate } from 'react-router';
