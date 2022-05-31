@@ -185,7 +185,7 @@ export const setSendMailStatus = (payload) => ({
   payload,
 });
 
-export const setIdentifyStatus = (payload) => ({
+export const setPaymentStatus = (payload) => ({
   type: SET_PAYMENT_STATUS,
   payload,
 });
