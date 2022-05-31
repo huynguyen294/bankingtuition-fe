@@ -7,7 +7,7 @@ import styles from './login-block.module.scss';
 import { actions } from '../..';
 
 function LoginBlock({ isLoginBtn }) {
-  const { userLogin } = actions;
+  const { userLogin, setLoginMessage } = actions;
 
   const { uiStore, userStore } = useSelector((state) => state);
   const { theme, loginMessage } = uiStore;
@@ -54,6 +54,9 @@ function LoginBlock({ isLoginBtn }) {
     if (isLogin) {
       negative('/', { replace: true });
     }
+    return () => {
+      setLoginMessage('');
+    };
   }, [isLogin]);
 
   return (

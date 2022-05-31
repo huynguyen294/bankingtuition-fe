@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { Nav, Main, Footer, ScrollToTop } from '../index';
 
 import styles from './App.module.scss';
+import { memo, useEffect } from 'react';
 
 function App() {
   const { App: App_style, dark: dark_style } = styles;
@@ -26,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

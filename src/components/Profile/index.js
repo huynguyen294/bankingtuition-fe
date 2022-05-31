@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -9,12 +9,26 @@ import { constants } from '../../redux/constants';
 
 function Profile() {
   const { FORMAT_MONEY } = constants;
-  const { fetchLsgd } = actions;
+  const { fetchLsgd, fetchUpdateUser } = actions;
+
   const { uiStore, userStore } = useSelector((state) => state);
   const { theme } = uiStore;
   const { user, lsgdList } = userStore;
   const dispatch = useDispatch();
-  const currentHistoryLenght = lsgdList.length - 4;
+
+  const [userProfile, setUserProfile] = useState({
+    mssv: '',
+    sodu: '',
+    name: '',
+    sdt: '',
+    email: '',
+  });
+
+  const currentHistoryLenght = useMemo(() => {
+    if (lsgdList.length) {
+      return lsgdList.length - 4;
+    }
+  }, [lsgdList]);
 
   const {
     'block-profile': blockProfile_style,
@@ -35,9 +49,31 @@ function Profile() {
     dark: dark_style,
   } = styles;
 
+  const handleUpdateUserProfile = () => {
+    if (
+      !(
+        user.name === userProfile.name &&
+        user.email === userProfile.email &&
+        user.sdt === userProfile.sdt
+      )
+    ) {
+      dispatch(fetchUpdateUser(userProfile));
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchLsgd(user.mssv));
-  }, []);
+    if (!lsgdList.length) {
+      dispatch(fetchLsgd(user.mssv));
+    }
+    setUserProfile((prev) => ({
+      ...prev,
+      name: user.name,
+      mssv: user.mssv,
+      sodu: Number(user.sodu),
+      email: user.email,
+      sdt: user.sdt,
+    }));
+  }, [user]);
 
   return (
     <div className={clsx(profile_style, { [dark_style]: theme })}>
@@ -56,25 +92,55 @@ function Profile() {
                 <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="avai-money">số dư: </label>
                   <input
-                    value={FORMAT_MONEY(`${user.sodu}`)}
+                    value={FORMAT_MONEY(`${userProfile.sodu}`)}
                     type="text"
-                    disabled
                     id="avai-money"
+                    disabled
                   />
                 </div>
                 <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="name">Tên người dùng: </label>
-                  <input value={user.name} type="text" disabled id="name" />
+                  <input
+                    value={userProfile.name}
+                    type="text"
+                    id="name"
+                    onChange={(e) =>
+                      setUserProfile((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="sdt">Số điện thoại: </label>
-                  <input value={user.sdt} type="text" disabled id="sdt" />
+                  <input
+                    value={userProfile.sdt}
+                    type="text"
+                    id="sdt"
+                    onChange={(e) =>
+                      setUserProfile((prev) => ({
+                        ...prev,
+                        sdt: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="email">Email: </label>
-                  <input value={user.email} type="text" disabled id="email" />
+                  <input
+                    value={userProfile.email}
+                    type="text"
+                    id="email"
+                    onChange={(e) =>
+                      setUserProfile((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
-                <button>Chỉnh sửa</button>
+                <button onClick={handleUpdateUserProfile}>Chỉnh sửa</button>
               </div>
             </div>
           </div>

@@ -1,19 +1,20 @@
 import clsx from 'clsx';
-import { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './home.module.scss';
 import { CheckLogin, CheckBox } from '../index';
-import { getHocPhiInfoByMagdApi, dongHocPhiApi } from '../../api';
+import { getHocPhiInfoByMagdApi } from '../../api';
 import { constants } from '../../redux/constants';
 import { useNavigate } from 'react-router';
 import { actions } from '../index';
+import axios from 'axios';
 
 function Home() {
   const { FORMAT_MONEY } = constants;
-  const { setPaymentInfo, fetchProfile } = actions;
+  const { setPaymentInfo, sendMail, setSendMailStatus } = actions;
   const { userStore, uiStore } = useSelector((state) => state);
-  const { theme } = uiStore;
+  const { theme, sendMailStatus } = uiStore;
   const { user } = userStore;
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ function Home() {
   const [uiController, setUiController] = useState({
     homeAcceptRule: false,
     message: '',
+    checkTuitionMessage: '',
     rulesFull: false,
     hocphiNo: 0,
   });
@@ -63,25 +65,7 @@ function Home() {
         userMagd: userInput.magd,
       };
       dispatch(setPaymentInfo(inputPaymentInfo));
-      const Options = {
-        method: 'POST',
-        headers: {
-          Accept:
-            'application/json, text/plain, */*, application/x-www-form-urlencoded',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `email=${user.email}&&mssv=${user.mssv}`,
-      };
-      const res = await fetch(dongHocPhiApi, Options);
-      const result = await res.json();
-      if (result.code === 0) {
-        navigate('/xac-minh', { replace: true });
-      } else {
-        setUiController((prev) => ({
-          ...prev,
-          message: 'Hệ thống lỗi vui lòng thử lại trong giây lát',
-        }));
-      }
+      dispatch(sendMail(user.mssv, user.email));
     } else {
       setUiController((prev) => ({
         ...prev,
@@ -90,23 +74,54 @@ function Home() {
     }
   };
 
-  const handleCheckedRule = (checked) => {
+  const handleCheckedRule = useCallback((checked) => {
     setUiController((prev) => ({ ...prev, homeAcceptRule: checked }));
+  }, []);
+
+  const handleCheckTuition = async () => {
+    if (userInput.mssv && userInput.magd) {
+      try {
+        axios
+          .get(
+            getHocPhiInfoByMagdApi +
+              `?mssv=${userInput.mssv}&magd=${userInput.magd}`
+          )
+          .then((res) => res.data)
+          .then((result) =>
+            setUiController((prev) => ({
+              ...prev,
+              hocphiNo: result.data,
+              checkTuitionMessage:
+                'Đã kiểm tra xong, vui lòng kiểm tra học phí nợ!!!',
+            }))
+          )
+          .catch((err) => {
+            if (err.response.data.code === 1) {
+              setUiController((prev) => ({
+                ...prev,
+                checkTuitionMessage:
+                  'Không tìm thấy học phí, vui lòng nhập chính xác mã số sinh viên và mã giao dịch !!!',
+              }));
+            }
+          });
+      } catch (err) {
+        throw err;
+      }
+    } else {
+      setUiController((prev) => ({
+        ...prev,
+        checkTuitionMessage:
+          'Vui lòng nhập thông tin mã số sinh viên và mã giao dịch !!!',
+      }));
+    }
   };
 
   useEffect(() => {
-    const handleChange = async () => {
-      if (userInput.mssv && userInput.magd) {
-        const res = await fetch(
-          getHocPhiInfoByMagdApi +
-            `?mssv=${userInput.mssv}&magd=${userInput.magd}`
-        );
-        const result = await res.json();
-        setUiController((prev) => ({ ...prev, hocphiNo: result.data }));
-      }
-    };
-    handleChange();
-  }, [userInput.mssv, userInput.magd]);
+    if (sendMailStatus.code === 0) {
+      dispatch(setSendMailStatus({ code: -999 }));
+      navigate('/xac-minh', { replace: true });
+    }
+  }, [sendMailStatus, navigate, dispatch]);
 
   return (
     <div className={clsx(home_style, { [dark_style]: theme })}>
@@ -117,23 +132,27 @@ function Home() {
           <div className={userInfo_style}>
             <div className={clsx(formGroup_style, disabled_style)}>
               <label htmlFor="username">Tên người dùng: </label>
-              <input value={user.name} type="text" id="username" disabled />
+              <p>{user.name}</p>
             </div>
             <div className={clsx(formGroup_style, disabled_style)}>
               <label htmlFor="sdt">Số điện thoại: </label>
-              <input value={user.sdt} type="text" id="sdt" disabled />
+              <p>{user.sdt}</p>
             </div>
             <div className={clsx(formGroup_style, disabled_style)}>
               <label htmlFor="email">Email: </label>
-              <input value={user.email} type="text" id="email" disabled />
+              <p>{user.email}</p>
             </div>
           </div>
           <div className={tuitionInfo_style}>
             <div className={formGroup_style}>
               <label htmlFor="mssv">Mã số sinh viên: </label>
               <input
+                value={userInput.mssv}
                 onChange={(e) =>
-                  setUserInput((prev) => ({ ...prev, mssv: e.target.value }))
+                  setUserInput((prev) => ({
+                    ...prev,
+                    mssv: e.target.value,
+                  }))
                 }
                 type="text"
                 id="mssv"
@@ -142,13 +161,27 @@ function Home() {
             <div className={formGroup_style}>
               <label htmlFor="ma-gd">Mã giao dịch: </label>
               <input
+                value={userInput.magd}
                 onChange={(e) =>
-                  setUserInput((prev) => ({ ...prev, magd: e.target.value }))
+                  setUserInput((prev) => ({
+                    ...prev,
+                    magd: e.target.value,
+                  }))
                 }
                 type="text"
                 id="ma-gd"
               />
             </div>
+            {uiController.checkTuitionMessage ? (
+              <i className={message_style}>
+                {uiController.checkTuitionMessage}
+              </i>
+            ) : (
+              ''
+            )}
+            <button onClick={handleCheckTuition}>
+              Kiểm tra học phí nợ ngay
+            </button>
           </div>
         </div>
         <div className={paymentInfo_style}>
@@ -168,7 +201,7 @@ function Home() {
           <div className={clsx(formGroup_style, disabled_style)}>
             <label htmlFor="avai-money">số dư khả dụng: </label>
             <input
-              value={FORMAT_MONEY('' + user.sodu)}
+              value={user ? FORMAT_MONEY('' + user.sodu) : ''}
               type="text"
               disabled
               id="avai-money"
@@ -182,6 +215,7 @@ function Home() {
                 : ''}
             </p>
             <input
+              value={userInput.paymentMoney}
               onChange={(e) =>
                 setUserInput((prev) => ({
                   ...prev,

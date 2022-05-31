@@ -79,7 +79,7 @@ $search-border-radius: 30px;
           border-radius: 4px;
           box-shadow: 0px 0px 5px 3px $light-shadow-color;
           background-color: $light-primary-color;
-          animation: subMenuUp .5s ease-out;
+          animation: subMenuUp .3s ease-out;
 
           li:nth-child(1){
             display: flex;
@@ -89,7 +89,7 @@ $search-border-radius: 30px;
           li {
             padding: .5em;
             display: flex;
-            justify-content: start;
+            justify-content: flex-start;
             text-align: start;
 
             a{

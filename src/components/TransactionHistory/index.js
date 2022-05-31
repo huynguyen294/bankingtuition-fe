@@ -30,14 +30,16 @@ function TransactionHistory() {
   } = styles;
 
   useEffect(() => {
-    dispatch(fetchLsgd(user.mssv));
-  }, []);
-
-  useEffect(() => {
     if (lsgdList.length) {
       setLsgd(lsgdList[lsgdList.length - 1]);
     }
   }, [lsgdList]);
+
+  useEffect(() => {
+    if (!lsgdList.length) {
+      dispatch(fetchLsgd(user.mssv));
+    }
+  }, []);
 
   return (
     <div className={clsx(TH_style, { [dark_style]: theme })}>

@@ -30,7 +30,9 @@ function MyTuiTion() {
   } = styles;
 
   useEffect(() => {
-    dispatch(fetchHocPhi(user.mssv));
+    if (!hocphiList.length) {
+      dispatch(fetchHocPhi(user.mssv));
+    }
   }, []);
 
   useEffect(() => {

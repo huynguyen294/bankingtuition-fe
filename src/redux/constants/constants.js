@@ -8,6 +8,8 @@ export const SET_LOGIN_MESSAGE = 'SET_LOGIN_MESSAGE';
 export const SET_PAYMENT_INFO = 'SET_PAYMENT_INFO';
 export const SET_LSGD_LIST = 'SET_LSGD_LIST';
 export const SET_HOC_PHI_LIST = 'SET_HOC_PHI_LIST';
+export const SET_SENDMAIL_STATUS = 'SET_SENDMAIL_STATUS';
+export const SET_PAYMENT_STATUS = 'SET_PAYMENT_STATUS';
 export const USER_LOGION = 'USER_LOGION';
 
 export const FORMAT_MONEY = (string) =>

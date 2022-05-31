@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../..';
 import styles from './switch.module.scss';

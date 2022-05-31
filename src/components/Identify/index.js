@@ -1,18 +1,20 @@
 import clsx from 'clsx';
-import { memo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { memo, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { CheckLogin, ComfirmModal } from '../index';
+import { CheckLogin, ComfirmModal, actions } from '../index';
 import styles from './identify.module.scss';
-import { dongHocPhiApi, xacMinhApi } from '../../api';
 
 function Identify() {
+  const { sendMail, fetchHandlePayment, setSendMailStatus, setPaymentStatus } =
+    actions;
   const { userStore, uiStore } = useSelector((state) => state);
-  const { theme } = uiStore;
+  const { theme, sendMailStatus, paymentStatus } = uiStore;
   const { paymentInfo } = userStore;
   const [message, setMessage] = useState({});
   const [code, setCode] = useState(0);
   const [success, setSuccess] = useState(false);
+  const dispatch = useDispatch();
 
   const {
     'box-identify': boxIdentify_style,
@@ -23,78 +25,50 @@ function Identify() {
 
   const { userMoney, userMssv, userMagd, email } = paymentInfo;
 
-  const hanleSendMail = async () => {
+  const hanleSendMail = () => {
     setMessage({
       done: false,
-      message: 'Hệ thống đang gữi mail, vui lòng chờ trong giây lát',
+      message: 'Hệ thống đang gữi lại mail, vui lòng chờ trong giây lát!!!',
     });
-    const Options = {
-      method: 'POST',
-      headers: {
-        Accept:
-          'application/json, text/plain, */*, application/x-www-form-urlencoded',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `email=${email}&&mssv=${userMssv}`,
-    };
-    fetch(dongHocPhiApi, Options)
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.code === 0) {
-          setMessage({
-            done: true,
-            message: 'Hệ thống đã gữi lại mail thành công',
-          });
-        } else {
-          setMessage({
-            done: false,
-            message: 'Hệ thống lỗi vui lòng thử lại trong giây lát',
-          });
-        }
-      });
+    dispatch(sendMail(userMssv, email));
   };
 
-  const handleIdentify = async (e) => {
+  const handlePayment = async (e) => {
+    e.preventDefault();
     setMessage({
       done: false,
       message: 'Hệ thống đang xác minh, vui lòng chờ trong giây lát',
     });
-    setTimeout(() => {
-      if (!success) {
-        setMessage({
-          done: false,
-          message: 'Quá thời gian chờ, hệ thống lỗi, xin mời quay lại sau',
-        });
-      }
-    }, 10000);
-    e.preventDefault();
-    const Options = {
-      method: 'POST',
-      headers: {
-        Accept:
-          'application/json, text/plain, */*, application/x-www-form-urlencoded',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `code=${code}&&userMoney=${userMoney}&&userMssv=${userMssv}&&userMagd=${userMagd}`,
-    };
-    fetch(xacMinhApi, Options)
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.code === 0) {
-          setSuccess(true);
-        } else if (result.code === -1) {
-          setMessage({
-            done: false,
-            message: 'Mã xác minh sai, vui lòng nhập lại',
-          });
-        } else {
-          setMessage({
-            done: false,
-            message: 'Hệ thống xảy ra lỗi vui lòng quay lại sau ít phút',
-          });
-        }
-      });
+    dispatch(fetchHandlePayment(code, userMoney, userMssv, userMagd));
   };
+
+  useEffect(() => {
+    if (sendMailStatus.code === 0) {
+      setMessage({
+        done: true,
+        message: 'Hệ thống đang đã gữi lại mail thành công!!!',
+      });
+      dispatch(setSendMailStatus({ code: -999 }));
+    } else if (sendMailStatus.code === -1) {
+      setMessage({
+        done: true,
+        message: 'Hệ thống xẩy ra lỗi vui lòng thử lại sau!!!',
+      });
+    }
+    if (paymentStatus.code === 0) {
+      setSuccess(true);
+      dispatch(setPaymentStatus({ code: -999 }));
+    } else if (paymentStatus.code === -1) {
+      setMessage({
+        done: true,
+        message: 'Hệ thống xẩy ra lỗi vui lòng thử lại sau!!!',
+      });
+    }
+
+    return () => {
+      setMessage({});
+    };
+  }, [sendMailStatus.code, paymentStatus.code]);
 
   return (
     <div className={clsx(boxIdentify_style, { [dark_style]: theme })}>
@@ -105,7 +79,7 @@ function Identify() {
         <p>Mã giao dịch sẽ mất hiệu lực sau 5 phút</p>
         <div>
           <input onChange={(e) => setCode(e.target.value)} type="text" />
-          <button onClick={handleIdentify} disabled={message.done}>
+          <button onClick={handlePayment} disabled={message.done}>
             Xác minh
           </button>
         </div>
