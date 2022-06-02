@@ -93,6 +93,15 @@
                         color: $light-color;
                         border: 0;
                         border-radius: 4px;
+                        font-weight: 600;
+
+                        &.btn-disabled{
+                            &:hover{
+                                transform: none;
+                                cursor: not-allowed;
+                            }
+                            background-color: #ccc;
+                        }
         
                         &:hover{
                             transform: scale(.98);
@@ -186,13 +195,10 @@
     color: $dark-line-color;
 
     .block-profile{
-
         .form-group{
-
             label{
                 margin-right: 5px;
             }
-
             input{
                 border: 1px solid $dark-el-secondary-color;
                 color: $dark-line-color;
@@ -214,12 +220,18 @@
                 background-color: rgba(73, 78, 89, 0.8);
                 .box-info{
                     button{
+                        &.btn-disabled{
+                            &:hover{
+                                transform: none;
+                                cursor: not-allowed;
+                            }
+                            background-color: rgba($color: #ccc, $alpha: .7);
+                        }
                         background-color: $dark-el-primary-color;
                     }
                 }
             }
         }
-
         .current-transaction{
             background-color: rgba(73, 78, 89, 0.8);
             box-shadow: 6px 6px 0 0 $light-shadow-color;
@@ -235,7 +247,6 @@
                     color: $dark-el-primary-color;
                 }
             }
-    
             .box-list-TH{
                 .list-TH{
                     background-color: rgba(73, 78, 89, 0.8);

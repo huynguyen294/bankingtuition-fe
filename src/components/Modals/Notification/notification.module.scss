@@ -1,0 +1,61 @@
+@import '../../variables';
+
+.container{
+    .modal{
+        z-index: 100;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1em;
+        border-radius: 4px;
+        animation: opacity .3s ease;
+        color: #000;
+        text-align: center;
+        font-weight: 500;
+
+        .modal-title{
+            h4{
+                font-size: 25px;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+        }
+        
+        .modal-body{
+            p{
+                max-width: 300px;
+            }
+        }
+    }
+
+    &.success{
+        i{
+            color: green;
+            font-size: 80px;
+            position: absolute;
+            top: -30px;
+            left: calc(50% - 40px);
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        .modal{
+            padding-top: 50px;
+            background-color: #fff;
+            .modal-title{
+                color: green;
+            }
+        }
+        .modal-footer{
+            button{
+                width: 70%;
+                border: 1px solid green;
+                background-color: #fff;
+                color: green;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+        }
+    }
+    
+}

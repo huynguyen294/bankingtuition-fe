@@ -9,6 +9,7 @@ import {
   MyTuiTion,
   TransactionHistory,
   Identify,
+  HandleModals,
 } from '../../index';
 import styles from './main.module.scss';
 
@@ -18,6 +19,7 @@ function Main({ navFixed }) {
   return (
     <div className={clsx(main_style, { [navFixed_style]: navFixed })}>
       <Container>
+        <HandleModals />
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/profile" element={<Profile />}></Route>

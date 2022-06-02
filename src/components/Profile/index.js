@@ -21,6 +21,7 @@ function Profile() {
     'card-group': cardGroup_style,
     'card-title': cardTitle_style,
     'box-list-TH': boxListTH_style,
+    'btn-disabled': btn_disabled_style,
     item: item_style,
     avatar: avavtar_style,
     profile: profile_style,
@@ -140,7 +141,22 @@ function Profile() {
                     }
                   />
                 </div>
-                <button onClick={handleUpdateUserProfile}>Chỉnh sửa</button>
+                <button
+                  disabled={
+                    user.name === userProfile.name &&
+                    user.email === userProfile.email &&
+                    user.sdt === userProfile.sdt
+                  }
+                  className={clsx({
+                    [btn_disabled_style]:
+                      user.name === userProfile.name &&
+                      user.email === userProfile.email &&
+                      user.sdt === userProfile.sdt,
+                  })}
+                  onClick={handleUpdateUserProfile}
+                >
+                  Chỉnh sửa
+                </button>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ const {
   SET_LOGIN_MESSAGE,
   SET_SENDMAIL_STATUS,
   SET_PAYMENT_STATUS,
+  SET_UPDATE_PROFILE_STATUS,
 } = constants;
 export const initialState = {
   theme: false,
@@ -15,6 +16,7 @@ export const initialState = {
   isLoginBtn: true,
   sendMailStatus: { code: -999, message: '' },
   paymentStatus: { code: -999, message: '' },
+  updateProfileStatus: { code: -999, message: '' },
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -31,6 +33,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, sendMailStatus: { ...payload } };
     case SET_PAYMENT_STATUS:
       return { ...state, paymentStatus: { ...payload } };
+    case SET_UPDATE_PROFILE_STATUS:
+      return { ...state, updateProfileStatus: { ...payload } };
     default:
       return state;
   }

@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styles from './comfirm-modal.module.scss';
+import styles from './payment-success.module.scss';
 
 import { actions } from '../../index';
 
-function ComfirmModal() {
+function PaymentSuccess() {
   const {
     'modal-header': modalHeader_style,
     'modal-title': modalTitle_style,
@@ -17,7 +17,7 @@ function ComfirmModal() {
     dark: dark_style,
   } = styles;
 
-  const { fetchLsgd } = actions;
+  const { fetchLsgd, setPaymentStatus } = actions;
 
   const { uiStore, userStore } = useSelector((state) => state);
   const { theme } = uiStore;
@@ -39,11 +39,19 @@ function ComfirmModal() {
         <div className={modalFooter_style}>
           <Link
             to={'/lich-su-giao-dich'}
-            onClick={() => dispatch(fetchLsgd(user.mssv))}
+            onClick={() => {
+              dispatch(fetchLsgd(user.mssv));
+              dispatch(setPaymentStatus({ code: -999 }));
+            }}
           >
             <button>Xem lịch sử giao dịch</button>
           </Link>
-          <Link to={'/'}>
+          <Link
+            onClick={() => {
+              dispatch(setPaymentStatus({ code: -999 }));
+            }}
+            to={'/'}
+          >
             <button>Quay về trang chủ</button>
           </Link>
         </div>
@@ -52,4 +60,4 @@ function ComfirmModal() {
   );
 }
 
-export default memo(ComfirmModal);
+export default memo(PaymentSuccess);

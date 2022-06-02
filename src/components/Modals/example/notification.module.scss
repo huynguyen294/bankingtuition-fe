@@ -1,0 +1,114 @@
+@import '../../variables';
+
+.container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-color: rgba($color: #000000, $alpha: .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    i{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        color: $light-line-color;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .modal{
+        position: relative;
+        padding: 2em;
+        background-color: $light-secondary-color;
+        border-radius: 4px;
+        animation: subMenuUp .3s ease;
+
+        .modal-body{
+            input{
+                width: 100%;
+                padding: 5px 10px;
+                border-radius: 3px;
+                border: 1px solid $light-el-primary-color;
+                background-color: rgba($color: #fff, $alpha: .7);
+                text-align: center;
+
+                &:focus{
+                    outline: none;
+                    background-color: rgba($color: $light-el-primary-color, $alpha: .2);
+                }
+            }
+        }
+
+        .modal-footer{
+            display: flex;
+            justify-content: flex-end;
+            
+            button{
+                border-radius: 3px;
+                padding: 5px 10px;
+                border: 0;
+                margin-right: 10px;
+                font-weight: 600;
+
+                &:hover{
+                    transform: scale(.98);
+                }
+
+            }
+            .cancel-btn{
+                background-color: rgba($color: red, $alpha: .8);
+                color: #fff;
+            }
+            .confirm-btn{
+                background-color: #ccc;
+            }
+        }
+    }
+}
+
+.container.dark{
+    color: $dark-color;
+
+    hr{
+        background-color: $dark-line-color;
+    }
+
+    background-color: rgba($color: #000, $alpha: .5);
+    i{
+        color: $dark-line-color;
+    }
+
+    .modal{
+        background-color: $dark-secondary-color;
+
+        .modal-body{
+            input{
+                border: 1px solid rgba($color: $dark-el-primary-color, $alpha: .7);
+                background-color: rgba($color: #000, $alpha: .1);
+                color: $dark-line-color;
+                font-weight: 600;
+                
+                &:focus{
+                    background-color: rgba($color: $dark-el-primary-color, $alpha: .2);
+                }
+            }
+        }
+
+        .modal-footer{
+            .cancel-btn{
+                background-color: rgba($color: red, $alpha: .8);
+                color: #fff;
+            }
+            .confirm-btn{
+                background-color: #ccc;
+            }
+        }
+    }
+}

@@ -21,6 +21,7 @@ const {
   SET_HOC_PHI_LIST,
   SET_SENDMAIL_STATUS,
   SET_PAYMENT_STATUS,
+  SET_UPDATE_PROFILE_STATUS,
 } = constants;
 
 export const userLogin =
@@ -61,7 +62,13 @@ export const fetchUpdateUser = (newUser) => (dispatch) => {
   axios
     .post(updateUserProfileApi, newUser)
     .then((res) => res.data)
-    .then(() => dispatch(refreshUser(newUser.mssv)))
+    .then(() => {
+      dispatch(refreshUser(newUser.mssv));
+      dispatch({
+        type: SET_UPDATE_PROFILE_STATUS,
+        payload: { code: 0, message: 'identify success' },
+      });
+    })
     .catch((err) => {
       if (err.response.data.code === 1) {
         console.log('Update user failed');
@@ -187,5 +194,10 @@ export const setSendMailStatus = (payload) => ({
 
 export const setPaymentStatus = (payload) => ({
   type: SET_PAYMENT_STATUS,
+  payload,
+});
+
+export const setUpdateProfileStatus = (payload) => ({
+  type: SET_UPDATE_PROFILE_STATUS,
   payload,
 });

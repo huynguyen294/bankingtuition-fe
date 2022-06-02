@@ -2,26 +2,23 @@ import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CheckLogin, ComfirmModal, actions } from '../index';
+import { CheckLogin, actions } from '../index';
 import styles from './identify.module.scss';
 
 function Identify() {
-  const { sendMail, fetchHandlePayment, setSendMailStatus, setPaymentStatus } =
-    actions;
-  const { userStore, uiStore } = useSelector((state) => state);
-  const { theme, sendMailStatus, paymentStatus } = uiStore;
-  const { paymentInfo } = userStore;
-  const [message, setMessage] = useState({});
-  const [code, setCode] = useState(0);
-  const [success, setSuccess] = useState(false);
-  const dispatch = useDispatch();
-
   const {
     'box-identify': boxIdentify_style,
     'block-identify': blockIdentify_style,
     message: message_style,
     dark: dark_style,
   } = styles;
+  const { sendMail, fetchHandlePayment, setSendMailStatus } = actions;
+  const { userStore, uiStore } = useSelector((state) => state);
+  const { theme, sendMailStatus, paymentStatus } = uiStore;
+  const { paymentInfo } = userStore;
+  const [message, setMessage] = useState({});
+  const [code, setCode] = useState(0);
+  const dispatch = useDispatch();
 
   const { userMoney, userMssv, userMagd, email } = paymentInfo;
 
@@ -55,10 +52,7 @@ function Identify() {
         message: 'Hệ thống xẩy ra lỗi vui lòng thử lại sau!!!',
       });
     }
-    if (paymentStatus.code === 0) {
-      setSuccess(true);
-      dispatch(setPaymentStatus({ code: -999 }));
-    } else if (paymentStatus.code === -1) {
+    if (paymentStatus.code === -1) {
       setMessage({
         done: true,
         message: 'Hệ thống xẩy ra lỗi vui lòng thử lại sau!!!',
@@ -74,7 +68,6 @@ function Identify() {
     <div className={clsx(boxIdentify_style, { [dark_style]: theme })}>
       <CheckLogin />
       <div className={blockIdentify_style}>
-        {success ? <ComfirmModal /> : ''}
         <h1>Vui lòng nhập mã xác thực đã được gửi về email {email}</h1>
         <p>Mã giao dịch sẽ mất hiệu lực sau 5 phút</p>
         <div>
