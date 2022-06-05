@@ -44,7 +44,7 @@ function Navigation({ navFixed }) {
           <div className={navMain_style}>
             <div className={clsx(menu_style, left_style)}>
               <h1 id={logo_style}>
-                <Link to={isLogin ? '/' : '/login'}>Banking Tuition</Link>
+                <Link to={isLogin ? '/' : '/login'}>iBanking Fee</Link>
               </h1>
             </div>
             <div className={clsx(menu_style, right_style)}>
