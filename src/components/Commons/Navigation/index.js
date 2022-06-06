@@ -91,7 +91,7 @@ function Navigation({ navFixed }) {
                   )}
                   <hr />
                   <li>
-                    <Link to={'/'}>Liên hệ với chúng tôi</Link>
+                    <Link to={'/guide'}>Giới thiệu trang web</Link>
                   </li>
                   {isLogin ? (
                     <li>

@@ -10,6 +10,7 @@ import {
   TransactionHistory,
   Identify,
   HandleModals,
+  Guide
 } from '../../index';
 import styles from './main.module.scss';
 
@@ -29,6 +30,7 @@ function Main({ navFixed }) {
             element={<TransactionHistory />}
           ></Route>
           <Route path="/xac-minh" element={<Identify />}></Route>
+          <Route path="/guide" element={<Guide />}></Route>
           <Route path="/" element={<Home />}></Route>
         </Routes>
       </Container>
