@@ -232,6 +232,12 @@
                 background-color: $dark-el-primary-color;
                 color: $light-color;
             }
+
+            &.input-money{
+                p{
+                    color: rgba($color: $dark-el-primary-color, $alpha: .7);
+                }
+            }
         }
         .student-info{
             .user-info{

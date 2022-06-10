@@ -183,6 +183,7 @@ function Home() {
             ) : (
               ''
             )}
+            <br />
             <button onClick={handleCheckTuition}>
               Kiểm tra học phí nợ ngay
             </button>
