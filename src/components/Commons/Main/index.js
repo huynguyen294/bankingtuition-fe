@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { memo } from 'react';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -12,6 +11,7 @@ import {
   Identify,
   HandleModals,
   SimpleBackdrop,
+  Guide,
 } from '../../index';
 import styles from './main.module.scss';
 
@@ -33,6 +33,7 @@ function Main() {
             element={<TransactionHistory />}
           ></Route>
           <Route path="/xac-minh" element={<Identify />}></Route>
+          <Route path="/guide" element={<Guide />}></Route>
           <Route path="/" element={<Home />}></Route>
         </Routes>
       </Container>
