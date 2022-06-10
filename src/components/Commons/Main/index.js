@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 import { Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import {
   Login,
@@ -10,16 +11,19 @@ import {
   TransactionHistory,
   Identify,
   HandleModals,
+  SimpleBackdrop,
 } from '../../index';
 import styles from './main.module.scss';
 
-function Main({ navFixed }) {
-  const { main: main_style, navFixed: navFixed_style } = styles;
+function Main() {
+  const { main: main_style } = styles;
+  const { backdrop } = useSelector((state) => state.uiStore);
 
   return (
-    <div className={clsx(main_style, { [navFixed_style]: navFixed })}>
+    <div className={main_style}>
       <Container>
         <HandleModals />
+        <SimpleBackdrop open={backdrop}></SimpleBackdrop>
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/profile" element={<Profile />}></Route>

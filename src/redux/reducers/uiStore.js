@@ -8,6 +8,7 @@ const {
   SET_SENDMAIL_STATUS,
   SET_PAYMENT_STATUS,
   SET_UPDATE_PROFILE_STATUS,
+  SET_BACKDROP,
 } = constants;
 export const initialState = {
   theme: false,
@@ -17,6 +18,7 @@ export const initialState = {
   sendMailStatus: { code: -999, message: '' },
   paymentStatus: { code: -999, message: '' },
   updateProfileStatus: { code: -999, message: '' },
+  backdrop: false,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -35,6 +37,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, paymentStatus: { ...payload } };
     case SET_UPDATE_PROFILE_STATUS:
       return { ...state, updateProfileStatus: { ...payload } };
+    case SET_BACKDROP:
+      return { ...state, backdrop: payload };
     default:
       return state;
   }

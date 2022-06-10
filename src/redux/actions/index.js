@@ -22,22 +22,26 @@ const {
   SET_SENDMAIL_STATUS,
   SET_PAYMENT_STATUS,
   SET_UPDATE_PROFILE_STATUS,
+  SET_BACKDROP,
 } = constants;
 
 export const userLogin =
   ({ username, password }) =>
   (dispatch) => {
+    dispatch(setBackdrop(true));
     axios
       .post(loginApi, { username, password })
       .then((res) => res.data)
       .then((result) => {
         if (result.code === 0) {
+          dispatch(setBackdrop(false));
           dispatch(setIsLogin(true));
           dispatch(refreshUser(result.mssv));
         }
       })
       .catch((err) => {
         if (err.response.data.code === 1) {
+          dispatch(setBackdrop(false));
           dispatch({
             type: SET_LOGIN_MESSAGE,
             payload: 'Tài khoảng hoặc mật khẩu không chính xác',
@@ -47,11 +51,16 @@ export const userLogin =
   };
 
 export const refreshUser = (mssv) => (dispatch) => {
+  dispatch(setBackdrop(true));
   axios
     .get(profileApi + `?mssv=${mssv}`)
     .then((res) => res.data)
-    .then((result) => dispatch({ type: SET_USER, payload: result.data }))
+    .then((result) => {
+      dispatch(setBackdrop(false));
+      dispatch({ type: SET_USER, payload: result.data });
+    })
     .catch((err) => {
+      dispatch(setBackdrop(false));
       if (err.response.data.code === 1) {
         console.log('Get user failed');
       }
@@ -77,12 +86,17 @@ export const fetchUpdateUser = (newUser) => (dispatch) => {
 };
 
 export const fetchLsgd = (mssv) => async (dispatch) => {
+  dispatch(setBackdrop(true));
   try {
     await axios
       .get(lichSuGiaoDichApi + `?mssv=${mssv}`)
       .then((res) => res.data)
-      .then((result) => dispatch({ type: SET_LSGD_LIST, payload: result.data }))
+      .then((result) => {
+        dispatch(setBackdrop(false));
+        dispatch({ type: SET_LSGD_LIST, payload: result.data });
+      })
       .catch((err) => {
+        dispatch(setBackdrop(false));
         if (err.response.data.code === 1) {
           console.log('Get user failed');
         }
@@ -93,13 +107,16 @@ export const fetchLsgd = (mssv) => async (dispatch) => {
 };
 
 export const fetchHocPhi = (mssv) => (dispatch) => {
+  dispatch(setBackdrop(true));
   axios
     .get(getHocPhiInfoApi + mssv)
     .then((res) => res.data)
-    .then((result) =>
-      dispatch({ type: SET_HOC_PHI_LIST, payload: result.data })
-    )
+    .then((result) => {
+      dispatch(setBackdrop(false));
+      dispatch({ type: SET_HOC_PHI_LIST, payload: result.data });
+    })
     .catch((err) => {
+      dispatch(setBackdrop(false));
       if (err.response.data.code === 1) {
         console.log('Get tuition failed');
       }
@@ -107,17 +124,20 @@ export const fetchHocPhi = (mssv) => (dispatch) => {
 };
 
 export const sendMail = (mssv, email) => async (dispatch) => {
+  dispatch(setBackdrop(true));
   await axios
     .post(sendEmailApi, { mssv, email })
     .then((res) => res.data)
-    .then((result) =>
+    .then((result) => {
+      dispatch(setBackdrop(false));
       dispatch({
         type: SET_SENDMAIL_STATUS,
         payload: { code: result.code, message: 'send mail success' },
-      })
-    )
+      });
+    })
     .catch((err) => {
       if (err) {
+        dispatch(setBackdrop(false));
         dispatch({
           type: SET_SENDMAIL_STATUS,
           payload: { code: -1, message: 'send mail failed' },
@@ -129,6 +149,7 @@ export const sendMail = (mssv, email) => async (dispatch) => {
 
 export const fetchHandlePayment =
   (code, userMoney, userMssv, userMagd) => (dispatch) => {
+    dispatch(setBackdrop(true));
     axios
       .post(handlePaymentApi, {
         code: code,
@@ -139,6 +160,7 @@ export const fetchHandlePayment =
       .then((res) => res.data)
       .then((result) => {
         if (result.code === 0) {
+          dispatch(setBackdrop(false));
           dispatch(refreshUser(userMssv));
           dispatch({
             type: SET_PAYMENT_STATUS,
@@ -148,6 +170,7 @@ export const fetchHandlePayment =
       })
       .catch((err) => {
         if (err.err.response.data.code === -1) {
+          dispatch(setBackdrop(false));
           dispatch({
             type: SET_PAYMENT_STATUS,
             payload: { code: -1, message: 'send mail failed' },
@@ -199,5 +222,10 @@ export const setPaymentStatus = (payload) => ({
 
 export const setUpdateProfileStatus = (payload) => ({
   type: SET_UPDATE_PROFILE_STATUS,
+  payload,
+});
+
+export const setBackdrop = (payload) => ({
+  type: SET_BACKDROP,
   payload,
 });

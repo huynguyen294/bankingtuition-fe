@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Nav, Main, Footer, ScrollToTop } from '../index';
 
 import styles from './App.module.scss';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 function App() {
   const { App: App_style, dark: dark_style } = styles;

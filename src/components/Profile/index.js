@@ -55,7 +55,8 @@ function Profile() {
       !(
         user.name === userProfile.name &&
         user.email === userProfile.email &&
-        user.sdt === userProfile.sdt
+        user.sdt === userProfile.sdt &&
+        user.mssv === userProfile.mssv
       )
     ) {
       dispatch(fetchUpdateUser(userProfile));
@@ -114,6 +115,20 @@ function Profile() {
                   />
                 </div>
                 <div className={clsx(formGroup_style, disabled_style)}>
+                  <label htmlFor="name">MSSV: </label>
+                  <input
+                    value={userProfile.mssv}
+                    type="text"
+                    id="mssv"
+                    onChange={(e) =>
+                      setUserProfile((prev) => ({
+                        ...prev,
+                        mssv: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className={clsx(formGroup_style, disabled_style)}>
                   <label htmlFor="sdt">Số điện thoại: </label>
                   <input
                     value={userProfile.sdt}
@@ -145,13 +160,15 @@ function Profile() {
                   disabled={
                     user.name === userProfile.name &&
                     user.email === userProfile.email &&
-                    user.sdt === userProfile.sdt
+                    user.sdt === userProfile.sdt &&
+                    user.mssv === userProfile.mssv
                   }
                   className={clsx({
                     [btn_disabled_style]:
                       user.name === userProfile.name &&
                       user.email === userProfile.email &&
-                      user.sdt === userProfile.sdt,
+                      user.sdt === userProfile.sdt &&
+                      user.mssv === userProfile.mssv,
                   })}
                   onClick={handleUpdateUserProfile}
                 >

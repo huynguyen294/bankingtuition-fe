@@ -11,8 +11,26 @@ import { actions } from '../index';
 import axios from 'axios';
 
 function Home() {
+  const {
+    'payment-form': paymentForm_style,
+    'student-info': studentInfo_style,
+    'user-info': userInfo_style,
+    'tuition-info': tuitionInfo_style,
+    'payment-info': paymentInfo_style,
+    'form-group': formGroup_style,
+    'btn-accept': btnAccept_style,
+    'rules-full': rulesFull_style,
+    'form-title': formTitle_style,
+    'input-money': inputMoney_style,
+    disable: disabled_style,
+    message: message_style,
+    rules: rules_style,
+    home: home_style,
+    dark: dark_style,
+  } = styles;
+
   const { FORMAT_MONEY } = constants;
-  const { setPaymentInfo, sendMail, setSendMailStatus } = actions;
+  const { setPaymentInfo, sendMail, setSendMailStatus, setBackdrop } = actions;
   const { userStore, uiStore } = useSelector((state) => state);
   const { theme, sendMailStatus } = uiStore;
   const { user } = userStore;
@@ -31,24 +49,6 @@ function Home() {
     rulesFull: false,
     hocphiNo: 0,
   });
-
-  const {
-    'payment-form': paymentForm_style,
-    'student-info': studentInfo_style,
-    'user-info': userInfo_style,
-    'tuition-info': tuitionInfo_style,
-    'payment-info': paymentInfo_style,
-    'form-group': formGroup_style,
-    'btn-accept': btnAccept_style,
-    'rules-full': rulesFull_style,
-    'form-title': formTitle_style,
-    'input-money': inputMoney_style,
-    disable: disabled_style,
-    message: message_style,
-    rules: rules_style,
-    home: home_style,
-    dark: dark_style,
-  } = styles;
 
   const hanlePayment = async (e) => {
     e.preventDefault();
@@ -81,22 +81,25 @@ function Home() {
   const handleCheckTuition = async () => {
     if (userInput.mssv && userInput.magd) {
       try {
+        dispatch(setBackdrop(true));
         axios
           .get(
             getHocPhiInfoByMagdApi +
               `?mssv=${userInput.mssv}&magd=${userInput.magd}`
           )
           .then((res) => res.data)
-          .then((result) =>
+          .then((result) => {
+            dispatch(setBackdrop(false));
             setUiController((prev) => ({
               ...prev,
               hocphiNo: result.data,
               checkTuitionMessage:
                 'Đã kiểm tra xong, vui lòng kiểm tra học phí nợ!!!',
-            }))
-          )
+            }));
+          })
           .catch((err) => {
             if (err.response.data.code === 1) {
+              dispatch(setBackdrop(false));
               setUiController((prev) => ({
                 ...prev,
                 checkTuitionMessage:
@@ -108,6 +111,7 @@ function Home() {
         throw err;
       }
     } else {
+      dispatch(setBackdrop(false));
       setUiController((prev) => ({
         ...prev,
         checkTuitionMessage:
