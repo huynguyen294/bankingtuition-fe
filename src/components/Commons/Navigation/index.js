@@ -95,7 +95,12 @@ function Navigation({ navFixed }) {
                   </li>
                   {isLogin ? (
                     <li>
-                      <a onClick={() => dispatch(setIsLogin(false))}>
+                      <a
+                        onClick={() => {
+                          dispatch({ type: 'USER_LOGGED_OUT' });
+                          dispatch(setIsLogin(false));
+                        }}
+                      >
                         Đăng xuất
                       </a>
                     </li>

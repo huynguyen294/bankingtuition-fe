@@ -59,7 +59,7 @@ function Profile() {
         user.mssv === userProfile.mssv
       )
     ) {
-      dispatch(fetchUpdateUser(userProfile));
+      dispatch(fetchUpdateUser({ newUser: userProfile, oldMssv: user.mssv }));
     }
   };
 

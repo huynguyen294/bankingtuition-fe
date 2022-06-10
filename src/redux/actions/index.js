@@ -51,39 +51,38 @@ export const userLogin =
   };
 
 export const refreshUser = (mssv) => (dispatch) => {
-  dispatch(setBackdrop(true));
   axios
     .get(profileApi + `?mssv=${mssv}`)
     .then((res) => res.data)
     .then((result) => {
-      dispatch(setBackdrop(false));
       dispatch({ type: SET_USER, payload: result.data });
     })
     .catch((err) => {
-      dispatch(setBackdrop(false));
       if (err.response.data.code === 1) {
         console.log('Get user failed');
       }
     });
 };
 
-export const fetchUpdateUser = (newUser) => (dispatch) => {
-  axios
-    .post(updateUserProfileApi, newUser)
-    .then((res) => res.data)
-    .then(() => {
-      dispatch(refreshUser(newUser.mssv));
-      dispatch({
-        type: SET_UPDATE_PROFILE_STATUS,
-        payload: { code: 0, message: 'identify success' },
+export const fetchUpdateUser =
+  ({ newUser, oldMssv }) =>
+  (dispatch) => {
+    axios
+      .post(updateUserProfileApi, { ...newUser, oldMssv })
+      .then((res) => res.data)
+      .then(() => {
+        dispatch(refreshUser(newUser.mssv));
+        dispatch({
+          type: SET_UPDATE_PROFILE_STATUS,
+          payload: { code: 0, message: 'identify success' },
+        });
+      })
+      .catch((err) => {
+        if (err.response.data.code === 1) {
+          console.log('Update user failed');
+        }
       });
-    })
-    .catch((err) => {
-      if (err.response.data.code === 1) {
-        console.log('Update user failed');
-      }
-    });
-};
+  };
 
 export const fetchLsgd = (mssv) => async (dispatch) => {
   dispatch(setBackdrop(true));
