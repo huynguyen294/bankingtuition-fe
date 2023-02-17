@@ -1,4 +1,4 @@
-import { constants } from '../constants';
+import { constants } from "../constants";
 
 const {
   SET_USER,
@@ -15,7 +15,7 @@ export const initialState = {
   hocphiList: [],
 };
 
-export default (state = initialState, { type, payload }) => {
+const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_USER:
       return { ...state, user: { ...payload } };
@@ -31,3 +31,5 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+export default userReducer;

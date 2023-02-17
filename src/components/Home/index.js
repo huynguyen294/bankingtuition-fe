@@ -47,25 +47,37 @@ function Home() {
     message: '',
     checkTuitionMessage: '',
     rulesFull: false,
-    hocphiNo: 0,
+    hocphiNo: '0',
   });
 
   const hanlePayment = async (e) => {
     e.preventDefault();
     if (uiController.homeAcceptRule) {
-      setUiController((prev) => ({
-        ...prev,
-        message:
-          'Hệ thống đang kiểm tra mssv và mã giao dịch, sẽ chuyển hướng nhanh thôi!!!',
-      }));
-      const inputPaymentInfo = {
-        email: user.email,
-        userMoney: userInput.paymentMoney,
-        userMssv: user.mssv,
-        userMagd: userInput.magd,
-      };
-      dispatch(setPaymentInfo(inputPaymentInfo));
-      dispatch(sendMail(user.mssv, user.email));
+      if (uiController.hocphiNo === '0') {
+        setUiController((prev) => ({
+          ...prev,
+          message: 'Bạn không thể thanh toán học phí nợ 0đ!!!',
+        }));
+      } else if (!userInput.paymentMoney) {
+        setUiController((prev) => ({
+          ...prev,
+          message: 'Bạn chưa nhập số tiền thanh toán.',
+        }));
+      } else {
+        setUiController((prev) => ({
+          ...prev,
+          message:
+            'Hệ thống đang kiểm tra mssv và mã giao dịch, sẽ chuyển hướng nhanh thôi!!!',
+        }));
+        const inputPaymentInfo = {
+          email: user.email,
+          userMoney: userInput.paymentMoney,
+          userMssv: user.mssv,
+          userMagd: userInput.magd,
+        };
+        dispatch(setPaymentInfo(inputPaymentInfo));
+        dispatch(sendMail(user.mssv, user.email));
+      }
     } else {
       setUiController((prev) => ({
         ...prev,

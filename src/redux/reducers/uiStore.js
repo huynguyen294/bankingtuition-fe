@@ -1,4 +1,4 @@
-import { constants } from '../constants';
+import { constants } from "../constants";
 
 const {
   SET_THEME,
@@ -12,16 +12,16 @@ const {
 } = constants;
 export const initialState = {
   theme: false,
-  homeMessage: '',
-  loginMessage: '',
+  homeMessage: "",
+  loginMessage: "",
   isLoginBtn: true,
-  sendMailStatus: { code: -999, message: '' },
-  paymentStatus: { code: -999, message: '' },
-  updateProfileStatus: { code: -999, message: '' },
+  sendMailStatus: { code: -999, message: "" },
+  paymentStatus: { code: -999, message: "" },
+  updateProfileStatus: { code: -999, message: "" },
   backdrop: false,
 };
 
-export default (state = initialState, { type, payload }) => {
+const uiReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_THEME:
       return { ...state, theme: payload };
@@ -43,3 +43,5 @@ export default (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+export default uiReducer;
